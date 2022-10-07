@@ -2,11 +2,27 @@
 
 MckLookAndFeel::MckLookAndFeel()
 {
+    ColourScheme cs = {
+        0xff2a2a2a,     // windowBackground
+        0xff333333,     // widgetBackground
+        0xff333333,     // menuBackground
+        0xff3a3a3a,     // outline
+        0xfff0f0f0,     // defaultText
+        0xfff0f0f0,     // defaultFill
+        0xfff0f0f0,     // highlightedText
+        0xff009bb3,     // highlightedFill
+        0xffffffff};    // menuText
+
+    setColourScheme(cs);
+
+    setColour(juce::TextButton::textColourOnId, juce::Colour::fromRGB(32,32,32));
+    
     Typeface::Ptr tface = Typeface::createSystemTypefaceFor(BinaryData::LatoBold_ttf, BinaryData::LatoBold_ttfSize);
     setDefaultSansSerifTypeface(tface);
-    
-    setColour(juce::DocumentWindow::backgroundColourId, juce::Colour::fromRGB(42, 42, 42));
-    setColour(juce::Label::textColourId, juce::Colour::fromRGB(0, 155, 179));
+
+    // setColour(juce::DocumentWindow::backgroundColourId, juce::Colour::fromRGB(42, 42, 42));
+    // setColour(windowBac)
+    // setColour(juce::Label::textColourId, juce::Colour::fromRGB(0, 155, 179));
 }
 
 void MckLookAndFeel::drawRotarySlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPos,
@@ -24,7 +40,7 @@ void MckLookAndFeel::drawRotarySlider(juce::Graphics &g, int x, int y, int width
 
     // auto hlColour = juce::Colour::fromRGB(0, 66, 76);
     auto bgColour = juce::Colour::fromRGB(58, 58, 58);
-    auto bgAlt = juce::Colour::fromRGB(42,42,42);
+    auto bgAlt = juce::Colour::fromRGB(42, 42, 42);
     auto shade1 = juce::Colour::fromRGB(74, 74, 74);
     auto shade2 = juce::Colour::fromRGB(90, 90, 90);
     auto shade3 = juce::Colour::fromRGB(160, 160, 160);
@@ -57,8 +73,8 @@ void MckLookAndFeel::drawRotarySlider(juce::Graphics &g, int x, int y, int width
     p4.addRectangle(-p4Thickness * 0.5f, -knobRadius, p4Thickness, pointerLength + pointerThickness - p4Thickness / 2.0f);
     p4.applyTransform(juce::AffineTransform::rotation(angle).translated(centreX, centreY));
 
-    //g.setColour(hlColour);
-    //g.fillPath(p4);
+    // g.setColour(hlColour);
+    // g.fillPath(p4);
 
     // outline
     g.setColour(shade2);
@@ -75,8 +91,8 @@ void MckLookAndFeel::drawRotarySlider(juce::Graphics &g, int x, int y, int width
     g.setColour(shade2);
     g.fillPath(p2);
 
-    //g.setColour(hlShade2);
-    //g.fillPath(p2);
+    // g.setColour(hlShade2);
+    // g.fillPath(p2);
 
     juce::Path p3;
     auto curAngle = rotaryStartAngle + (rotaryEndAngle - rotaryStartAngle) * sliderPos;
@@ -92,6 +108,6 @@ void MckLookAndFeel::fillResizableWindowBackground(juce::Graphics &g,
                                                    const juce::BorderSize<int> &borderSize,
                                                    juce::ResizableWindow &window)
 {
-    g.setColour(juce::Colour::fromRGB(58,58,58));
+    g.setColour(juce::Colour::fromRGB(58, 58, 58));
     g.fillRect(0, 0, width, height);
 }
