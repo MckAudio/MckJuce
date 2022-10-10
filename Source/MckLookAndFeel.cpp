@@ -26,7 +26,7 @@ MckLookAndFeel::MckLookAndFeel()
 }
 
 void MckLookAndFeel::drawRotarySlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPos,
-                                      const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider &)
+                                      const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider &s)
 {
     auto size = (float)juce::jmin(width / 2, height / 2);
     auto knobRadius = 0.75f * size;
@@ -96,7 +96,16 @@ void MckLookAndFeel::drawRotarySlider(juce::Graphics &g, int x, int y, int width
 
     juce::Path p3;
     auto curAngle = rotaryStartAngle + (rotaryEndAngle - rotaryStartAngle) * sliderPos;
+    if (s.isSymmetricSkew()) {
+        auto rotaryMidAngle = rotaryStartAngle + (rotaryEndAngle - rotaryStartAngle) / 2.0f;
+        if (std::abs(curAngle - rotaryMidAngle) < M_PI / 180.0) {
+            p3.addCentredArc(centreX, centreY, pathRadius, pathRadius, 0, rotaryMidAngle - M_PI / 180.0, rotaryMidAngle + M_PI / 180.0, true);
+        } else {
+            p3.addCentredArc(centreX, centreY, pathRadius, pathRadius, 0, curAngle, rotaryMidAngle, true);
+        }
+    } else {
     p3.addCentredArc(centreX, centreY, pathRadius, pathRadius, 0, rotaryStartAngle, curAngle, true);
+    }
     PathStrokeType(pointerThickness, juce::PathStrokeType::JointStyle::curved, juce::PathStrokeType::EndCapStyle::rounded).createStrokedPath(p3, p3);
     g.setColour(hlColour);
     g.fillPath(p3);
